@@ -10,12 +10,14 @@ from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token
 import os
 
-
-api = Blueprint('api', __name__)
+api = Flask(__name__)
 
 #FLASK_JWT_EXTENDED
 api.config["JWT_SECRET_KEY"] = os.getenv("FLASK_JWT_SECRET_KEY")
 jwt = JWTManager(api)
+
+api = Blueprint('api', __name__)
+
 
 # Allow CORS requests to this API
 CORS(api)
@@ -81,3 +83,4 @@ def handle_login():
 
     # Send the token to the client
     return jsonify({"token": ""}), 200
+
