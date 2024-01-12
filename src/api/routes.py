@@ -82,5 +82,9 @@ def handle_login():
     token = create_access_token(identity=user.id)
 
     # Send the token to the client
-    return jsonify({"token": ""}), 200
+    return jsonify({"token": ""})
 
+@api.route("/user/<int:id>")
+def get_user(id):
+    user = User.query.get(id)
+    return jsonify(user.serialize()), 200
