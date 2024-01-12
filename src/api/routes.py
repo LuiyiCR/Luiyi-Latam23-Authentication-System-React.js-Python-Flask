@@ -6,7 +6,7 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from bcrypt import gensalt
-from flask_bcrypt import generate_password_hash
+from flask_bcrypt import generate_password_hash, check_password_hash
 
 api = Blueprint('api', __name__)
 
@@ -51,3 +51,24 @@ def handle_register():
         db.session.rollback()
         return jsonify({"msg": "DB Error"}), 500 
     return "", 201
+
+@api.route("/token", methods=["POST"])
+def handle_login():
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+    # Verify that we receive all the data
+    # Verify that the email exist and it is valid
+    # Get the the user who owns the email
+    user = User.query.filter_by(email=email).one_or_none()
+    if user is None:
+        return jsonify({"msg": "User does not exist"}), 404
+    # Verify the password
+    password_is_valid = check_password_hash(
+        user.hashed_password, 
+        password + user.salt
+        )
+    print(password_is_valid)
+    # Create the token
+    # Send the token to the client
+    return jsonify({"token": ""}), 200
