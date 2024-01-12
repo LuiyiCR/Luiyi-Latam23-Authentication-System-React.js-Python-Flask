@@ -7,7 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from bcrypt import gensalt
 from flask_bcrypt import generate_password_hash, check_password_hash
-from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
 import os
 
 api = Flask(__name__)
@@ -82,9 +82,11 @@ def handle_login():
     token = create_access_token(identity=user.id)
 
     # Send the token to the client
-    return jsonify({"token": ""})
+    return jsonify({"token": token}), 200
 
-@api.route("/user/<int:id>")
-def get_user(id):
+@api.route("/user")
+@jwt_required()
+def get_user():
+    id = get_jwt_identity()
     user = User.query.get(id)
     return jsonify(user.serialize()), 200
