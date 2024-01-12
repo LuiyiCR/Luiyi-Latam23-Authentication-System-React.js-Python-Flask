@@ -6,6 +6,7 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from bcrypt import gensalt
+from flask_bcrypt import generate_password_hash
 
 api = Blueprint('api', __name__)
 
@@ -23,12 +24,30 @@ def handle_hello():
 
 @api.route("/user", methods=["POST"])
 def handle_register():
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")   
     # Verify that the request has the required fields
     # Verify that the user doesn't already exist
+
     # Create the salt
-    salt = str(gensalt())
+    salt = str(gensalt(), encoding="utf-8")
+
     # Create the hashed_password password + salt
+    hashed_password = str(generate_password_hash(password + salt), encoding="utf-8")
+
     # Create the user
+    new_user = User(
+        email=email,
+        salt=salt,
+        hashed_password=hashed_password
+    )
+
     # Save the user in the DB
-    # Return 201
-    return jsonify({"salt": salt}), 200
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": "DB Error"}), 500 
+    return "", 201
