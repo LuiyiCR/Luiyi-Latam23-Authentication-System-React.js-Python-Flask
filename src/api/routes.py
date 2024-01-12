@@ -7,8 +7,15 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from bcrypt import gensalt
 from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_jwt_extended import JWTManager, create_access_token
+import os
+
 
 api = Blueprint('api', __name__)
+
+#FLASK_JWT_EXTENDED
+api.config["JWT_SECRET_KEY"] = os.getenv("FLASK_JWT_SECRET_KEY")
+jwt = JWTManager(api)
 
 # Allow CORS requests to this API
 CORS(api)
@@ -65,10 +72,12 @@ def handle_login():
         return jsonify({"msg": "User does not exist"}), 404
     # Verify the password
     password_is_valid = check_password_hash(
-        user.hashed_password, 
-        password + user.salt
+        pw_hash=user.hashed_password, 
+        password=password + user.salt
         )
-    print(password_is_valid)
+    
     # Create the token
+    token = create_access_token(identity=user.id)
+
     # Send the token to the client
     return jsonify({"token": ""}), 200
