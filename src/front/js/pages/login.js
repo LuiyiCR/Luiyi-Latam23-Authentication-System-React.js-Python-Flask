@@ -12,7 +12,9 @@ export const Login = () => {
 
   console.log('This is the token', store.token);
 
-  const handleClick = () => {
+  const handleSignUpClick = () => {};
+
+  const handleLoginClick = () => {
     actions.login(email, password);
   };
 
@@ -24,7 +26,7 @@ export const Login = () => {
       className="d-flex align-items-center justify-content-center"
       style={{
         minHeight: '100vh',
-        backgroundColor: '#4B6ED2',
+        backgroundColor: '#82a7e3',
       }}
     >
       <div
@@ -56,7 +58,7 @@ export const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <button
-              onClick={handleClick}
+              onClick={handleLoginClick}
               className="btn btn-primary"
               style={{
                 backgroundImage:
@@ -69,15 +71,15 @@ export const Login = () => {
             </button>
             <p className="text-center m-3">OR</p>
             <button
-              onClick={handleClick}
+              onClick={handleSignUpClick}
               className="btn btn-primary"
               style={{
-                background: '#233465',
+                backgroundColor: '#233465',
                 borderRadius: '10px',
                 width: '100%',
               }}
             >
-              Sign Up
+              SIGN UP
             </button>
           </div>
         )}
