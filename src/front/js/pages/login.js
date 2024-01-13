@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
+import { useNavigate } from 'react-router-dom';
 import rigoImageUrl from '../../img/rigo-baby.jpg';
 import '../../styles/home.css';
 
@@ -7,43 +8,22 @@ export const Login = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const token = sessionStorage.getItem('token');
-  console.log('This is the token', token);
+  const navigate = useNavigate();
+
+  console.log('This is the token', store.token);
 
   const handleClick = () => {
-    const opts = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    };
-
-    fetch(
-      'https://super-duper-engine-9v7rwx5xgqw3p99x-3001.preview.app.github.dev/api/token',
-      opts
-    )
-      .then((resp) => {
-        if (resp.status === 200) return resp.json();
-        else alert('There is an error');
-      })
-      .then((data) => {
-        console.log('this is the token', data.token);
-        sessionStorage.setItem('token', data.token);
-      })
-      .catch((error) => {
-        console.error('There is an error!', error);
-      });
+    actions.login(email, password);
   };
+
+  if (store.token && store.token !== '' && store.token !== undefined)
+    navigate('/');
 
   return (
     <div className="text-center mt-5">
       <h1>Login</h1>
-      {token && token !== '' && token !== 'undefined' ? (
-        'You are logged in with this token' + token
+      {store.token && store.token !== '' && store.token !== 'undefined' ? (
+        'You are logged in with this token' + store.token
       ) : (
         <div>
           <input
