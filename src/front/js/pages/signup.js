@@ -38,6 +38,11 @@ export const SignUp = () => {
             placeholder="Password"
             className="form-control mb-3"
           />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            className="form-control mb-3"
+          />
 
           <button
             onClick={handleSignUpClick}
