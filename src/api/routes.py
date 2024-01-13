@@ -8,13 +8,7 @@ from flask_cors import CORS
 from bcrypt import gensalt
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
-import os
 
-api = Flask(__name__)
-
-#FLASK_JWT_EXTENDED
-api.config["JWT_SECRET_KEY"] = os.getenv("FLASK_JWT_SECRET_KEY")
-jwt = JWTManager(api)
 
 api = Blueprint('api', __name__)
 
@@ -68,7 +62,7 @@ def handle_login():
     password = data.get("password")
     # Verify that we receive all the data
     # Verify that the email exist and it is valid
-    # Get the the user who owns the email
+    # Get the user who owns the email
     user = User.query.filter_by(email=email).one_or_none()
     if user is None:
         return jsonify({"msg": "User does not exist"}), 404
