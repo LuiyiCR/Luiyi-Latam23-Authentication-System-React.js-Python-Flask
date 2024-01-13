@@ -20,27 +20,68 @@ export const Login = () => {
     navigate('/');
 
   return (
-    <div className="text-center mt-5">
-      <h1>Login</h1>
-      {store.token && store.token !== '' && store.token !== 'undefined' ? (
-        'You are logged in with this token' + store.token
-      ) : (
-        <div>
-          <input
-            type="text"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button onClick={handleClick}>Login</button>
-        </div>
-      )}
+    <div
+      className="d-flex align-items-center justify-content-center"
+      style={{
+        minHeight: '100vh',
+        backgroundColor: '#4B6ED2',
+      }}
+    >
+      <div
+        className="text-center p-4"
+        style={{
+          backgroundColor: '#233465',
+          color: 'white',
+          borderRadius: '10px',
+          width: '300px',
+        }}
+      >
+        <h1>Login</h1>
+        {store.token && store.token !== '' && store.token !== 'undefined' ? (
+          'You are logged in with this token' + store.token
+        ) : (
+          <div>
+            <input
+              type="text"
+              placeholder="Email"
+              className="form-control mb-3"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="form-control mb-3"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              onClick={handleClick}
+              className="btn btn-primary"
+              style={{
+                backgroundImage:
+                  'linear-gradient(to right, #8C4BC0, #663CB8, #4B6ED2)',
+                borderRadius: '10px',
+                width: '100%',
+              }}
+            >
+              LOGIN
+            </button>
+            <p className="text-center m-3">OR</p>
+            <button
+              onClick={handleClick}
+              className="btn btn-primary"
+              style={{
+                background: '#233465',
+                borderRadius: '10px',
+                width: '100%',
+              }}
+            >
+              Sign Up
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
