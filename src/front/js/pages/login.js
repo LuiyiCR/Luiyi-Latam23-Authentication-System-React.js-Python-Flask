@@ -7,6 +7,8 @@ export const Login = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const token = sessionStorage.getItem('token');
+  console.log('This is the token', token);
 
   const handleClick = () => {
     const opts = {
@@ -28,7 +30,10 @@ export const Login = () => {
         if (resp.status === 200) return resp.json();
         else alert('There is an error');
       })
-      .then()
+      .then((data) => {
+        console.log('this is the token', data.token);
+        sessionStorage.setItem('token', data.token);
+      })
       .catch((error) => {
         console.error('There is an error!', error);
       });
@@ -37,19 +42,25 @@ export const Login = () => {
   return (
     <div className="text-center mt-5">
       <h1>Login</h1>
-      <input
-        type="text"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleClick}>Login</button>
+      {token && token !== '' && token !== 'undefined' ? (
+        'You are logged in with this token' + token
+      ) : (
+        <div>
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button onClick={handleClick}>Login</button>
+        </div>
+      )}
     </div>
   );
 };
