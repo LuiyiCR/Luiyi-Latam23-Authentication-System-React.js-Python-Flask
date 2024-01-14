@@ -25,6 +25,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       syncTokenFromSessionStorage: () => {
         const token = sessionStorage.getItem('token');
         console.log('This is the token from session storage', token);
+        setStore({ token: null });
+      },
+
+      logout: () => {
+        sessionStorage.removeItem('token');
+        console.log('Logged out');
         if (token && token !== '' && token !== 'undefined')
           setStore({ token: token });
       },
