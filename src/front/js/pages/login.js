@@ -17,6 +17,17 @@ export const Login = () => {
   };
 
   const handleLoginClick = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email');
+      return;
+    }
+
+    if (!password) {
+      alert('Please enter a password');
+      return;
+    }
+
     actions.login(email, password);
   };
 
