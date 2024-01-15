@@ -30,6 +30,11 @@ export const SignUp = () => {
           headers: {
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword,
+          }),
         }
       );
 
