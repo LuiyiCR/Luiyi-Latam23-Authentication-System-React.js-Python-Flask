@@ -22,11 +22,27 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().changeColor(0, 'green');
       },
 
+      signup: async (email, password, confirmPassword) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+          alert('Please enter a valid email');
+          return false;
+        }
+
+        if (!password || password !== confirmPassword) {
+          alert('Passwords do not match or are empty');
+          return false;
+        }
+
+        return true;
+      },
+
       syncTokenFromSessionStorage: () => {
         const token = sessionStorage.getItem('token');
         console.log('This is the token from session storage', token);
         if (token && token !== '' && token !== 'undefined')
-          setStore({ token: null });
+          setStore({ token: token });
       },
 
       logout: () => {
@@ -52,7 +68,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             'https://super-duper-engine-9v7rwx5xgqw3p99x-3001.preview.app.github.dev/api/token',
             opts
           );
-          if (resp.status !== 200) {
+          if (resp.status !== 201) {
             console.log('Error loggin in');
             return false;
           }
