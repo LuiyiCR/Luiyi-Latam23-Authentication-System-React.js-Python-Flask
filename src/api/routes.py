@@ -102,7 +102,7 @@ def handle_login():
     # Send the token to the client
     return jsonify({"token": token}), 200
 
-@api.route("/user")
+@api.route("/profile")
 @jwt_required()
 def get_user():
     id = get_jwt_identity()
