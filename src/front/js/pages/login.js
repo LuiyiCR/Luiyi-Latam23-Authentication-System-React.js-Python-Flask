@@ -12,7 +12,7 @@ export const Login = () => {
 
   console.log('This is the token', store.token);
 
-  const handleSignUpClick = () => {
+  const handleSignUpClick = () => {  
     navigate('/signup');
   };
 
