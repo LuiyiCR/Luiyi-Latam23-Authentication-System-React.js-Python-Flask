@@ -16,8 +16,9 @@ export const Login = () => {
     navigate('/signup');
   };
 
-  const handleLoginClick = () => {
+  const handleLoginClick = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailRegex.test(email)) {
       alert('Please enter a valid email');
       return;
@@ -28,7 +29,12 @@ export const Login = () => {
       return;
     }
 
-    actions.login(email, password);
+    const success = await actions.login(email, password);
+
+    if (!success) {
+      alert('Wrong password or email');
+      return;
+    }
   };
 
   if (store.token && store.token !== '' && store.token !== undefined)

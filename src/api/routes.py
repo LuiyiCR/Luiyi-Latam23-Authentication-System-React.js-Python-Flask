@@ -31,7 +31,21 @@ def handle_register():
     email = data.get("email")
     password = data.get("password")   
     # Verify that the request has the required fields
+    if email is None or password is None:
+        return jsonify({"msg": "Email and password required"}), 400
+    
+    # Verify that the email is valid
+    if "@" not in email:
+        return jsonify({"msg": "Invalid email"}), 400
+    
+    # Verify that the password is valid
+    if not password:
+        return jsonify({"msg": "Please enter a password"}), 400
+    
     # Verify that the user doesn't already exist
+    user = User.query.filter_by(email=email).one_or_none()
+    if user is not None:
+        return jsonify({"msg": "User already exists"}), 400
 
     # Create the salt
     salt = str(gensalt(), encoding="utf-8")
@@ -71,6 +85,10 @@ def handle_login():
         pw_hash=user.hashed_password, 
         password=password + user.salt
         )
+
+    # verify if the password is valid
+    if not password_is_valid:
+        return jsonify({"msg": "Invalid password"}), 401
     
     # Create the token
     token = create_access_token(identity=user.id)

@@ -53,12 +53,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             opts
           );
           if (resp.status !== 200) {
-            alert('There is an error');
+            console.log('Error loggin in');
             return false;
           }
 
           const data = await resp.json();
-          console.log('this is the token', data.token);
           sessionStorage.setItem('token', data.token);
           setStore({ token: data.token });
           return true;
