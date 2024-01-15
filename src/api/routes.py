@@ -30,8 +30,11 @@ def handle_register():
     data = request.json
     email = data.get("email")
     password = data.get("password")   
+    confirmPassword = data.get('confirmPassword')
+
+
     # Verify that the request has the required fields
-    if email is None or password is None:
+    if email is None or password is None or confirmPassword is None:
         return jsonify({"msg": "Email and password required"}), 400
     
     # Verify that the email is valid
@@ -41,6 +44,10 @@ def handle_register():
     # Verify that the password is valid
     if not password:
         return jsonify({"msg": "Please enter a password"}), 400
+
+    # Verify that the password and confirmPassword match
+    if password != confirmPassword:
+        return jsonify({"msg": "Passwords do not match"}), 400
     
     # Verify that the user doesn't already exist
     user = User.query.filter_by(email=email).one_or_none()
@@ -75,7 +82,6 @@ def handle_login():
     email = data.get("email")
     password = data.get("password")
     # Verify that we receive all the data
-    # Verify that the email exist and it is valid
     # Get the user who owns the email
     user = User.query.filter_by(email=email).one_or_none()
     if user is None:
