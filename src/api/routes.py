@@ -16,14 +16,14 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
-@api.route('/home', methods=['POST', 'GET'])
-def handle_hello():
+# @api.route('/home', methods=['POST', 'GET'])
+# def handle_hello():
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+#     response_body = {
+#         "message": "Welcome to the Home Page! Already have an account? LOGIN! If not, SIGN-UP!",
+#     }
 
-    return jsonify(response_body), 200
+#     return jsonify(response_body), 200
 
 @api.route("/user", methods=["POST"])
 def handle_register():
