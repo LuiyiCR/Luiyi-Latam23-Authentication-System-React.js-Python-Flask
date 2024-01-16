@@ -65,7 +65,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const resp = await fetch(
-            'https://super-duper-engine-9v7rwx5xgqw3p99x-3001.preview.app.github.dev/api/token',
+            process.env.BACKEND_URL + '/api/token',
             opts
           );
           if (resp.status !== 201) {
@@ -85,7 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getMessage: async () => {
         try {
           // fetching data from the backend
-          const resp = await fetch(process.env.BACKEND_URL + '/api/hello');
+          const resp = await fetch(process.env.BACKEND_URL + '/api/home');
           const data = await resp.json();
           setStore({ message: data.message });
           // don't forget to return something, that is how the async resolves
