@@ -24,7 +24,7 @@ export const SignUp = () => {
 
     try {
       const response = await fetch(
-        'https://psychic-funicular-9v7rwx5xr5j3j5r-3001.preview.app.github.dev/user',
+        'https://psychic-funicular-9v7rwx5xr5j3j5r-3001.preview.app.github.dev/api/user',
         {
           method: 'POST',
           headers: {

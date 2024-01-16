@@ -16,14 +16,16 @@ export const Home = () => {
       <div className="alert alert-info">
         {store.message || (
           <>
-            Please{' '}
+            Welcome to the Home Page! <br />
+            Already have an account?{' '}
             <Link
               to="/login"
               style={{ color: 'blue', textDecoration: 'underline' }}
             >
-              login
+              LOGIN!
             </Link>
-            !
+            <br />
+            If not <Link to="/signup">SIGN-UP!</Link>
           </>
         )}
       </div>

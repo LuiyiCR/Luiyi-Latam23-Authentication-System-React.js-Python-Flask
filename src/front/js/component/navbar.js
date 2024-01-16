@@ -8,9 +8,9 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="container">
-        <Link to="/login">
+        {/* <Link to="/login">
           <span className="navbar-brand mb-0 h1">Login</span>
-        </Link>
+        </Link> */}
         <div className="ml-auto">
           {!store.token ? (
             <Link to="/">
